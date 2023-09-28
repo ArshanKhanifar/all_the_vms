@@ -23,3 +23,6 @@ snap install gh
 
 echo "🥸 logging in"
 gh auth login
+
+echo "😅 installing nodejs & npm"
+apt install -y nodejs npm
