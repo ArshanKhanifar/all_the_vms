@@ -18,3 +18,8 @@ apt install docker-ce
 echo "🤨 getting docker status"
 systemctl status docker
 
+echo "🐙 installing gh CLI"
+snap install gh
+
+echo "🥸 logging in"
+gh auth login
