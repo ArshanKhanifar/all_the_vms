@@ -5,6 +5,13 @@ endif
 show-secret:
 	echo $(arshan)
 
+CONTEXT_NAME:=arshan-testing
+
+login:
+	# you'll need your token: https://cloud.digitalocean.com/account/api/tokens
+	doctl auth init --context $(CONTEXT_NAME)
+	doctl auth switch --context $(CONTEXT_NAME)
+
 IMAGE_TYPE:=ubuntu-20-04-x64
 SIZE:=s-1vcpu-2gb
 REGION:=nyc1
@@ -15,7 +22,18 @@ create-droplet:
 		--image $(IMAGE_TYPE) \
 		--size $(SIZE) \
 		--region $(REGION) \
+		--ssh-keys=$(FINGERPRINT) \
 		$(DROPLET_NAME)
+
+delete-droplet:
+	doctl compute droplet delete \
+		$(DROPLET_NAME)
+
+list-droplets:
+	doctl compute droplet list
+
+ssh-into-droplet:
+	doctl compute ssh --ssh-key-path $(SSH_KEYPATH) $(DROPLET_NAME)
 
 encrypt:
 	@read -s -p "Enter encryption password: " password; \
